@@ -1,0 +1,5 @@
+{
+  "name": "PuckPulse AI Analytics",
+  "description": "A sophisticated hockey analytics platform that uses Gemini AI to translate natural language questions into data insights and interactive charts.",
+  "requestFramePermissions": []
+}
