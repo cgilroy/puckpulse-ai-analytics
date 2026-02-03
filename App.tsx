@@ -89,7 +89,7 @@ const App: React.FC = () => {
   }, [handleSearch]);
 
   return (
-    <div className="flex flex-col lg:flex-row h-screen overflow-hidden bg-slate-950 text-slate-200">
+    <div className="flex flex-col lg:flex-row h-screen lg:overflow-hidden bg-slate-950 text-slate-200">
       <Sidebar 
         selectedModel={selectedModel} 
         onModelChange={setSelectedModel}
