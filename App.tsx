@@ -20,12 +20,33 @@ const App: React.FC = () => {
     const saved = localStorage.getItem('selectedLLMModel');
     return (saved as LLMModelKey) || DEFAULT_MODEL;
   });
+  const [isSidebarOpen, setIsSidebarOpen] = useState(() => {
+    if (typeof window !== 'undefined') {
+      return window.innerWidth >= 1024; // lg breakpoint
+    }
+    return true;
+  });
   const scrollRef = useRef<HTMLDivElement>(null);
 
   // Save model selection to localStorage
   useEffect(() => {
     localStorage.setItem('selectedLLMModel', selectedModel);
   }, [selectedModel]);
+
+  useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth >= 1024) {
+        // On desktop, open sidebar
+        setIsSidebarOpen(true);
+      } else {
+        // On mobile, close sidebar
+        setIsSidebarOpen(false);
+      }
+    };
+
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
 
   const handleSearch = useCallback(async (customPrompt?: string) => {
     const promptToUse = customPrompt || query;
@@ -69,7 +90,20 @@ const App: React.FC = () => {
 
   return (
     <div className="flex flex-col lg:flex-row h-screen overflow-hidden bg-slate-950 text-slate-200">
-      <Sidebar selectedModel={selectedModel} onModelChange={setSelectedModel} />
+      <Sidebar 
+        selectedModel={selectedModel} 
+        onModelChange={setSelectedModel}
+        isOpen={isSidebarOpen}
+        onToggle={() => setIsSidebarOpen(!isSidebarOpen)}
+        onClose={() => setIsSidebarOpen(false)}
+      />
+
+      {isSidebarOpen && (
+        <div 
+          className="fixed inset-0 bg-black/50 z-40 lg:hidden"
+          onClick={() => setIsSidebarOpen(false)}
+        />
+      )}
 
       <main className="flex-1 flex flex-col min-w-0">
         <SearchHeader
@@ -78,6 +112,7 @@ const App: React.FC = () => {
           onQueryChange={setQuery}
           onSearch={() => handleSearch()}
           onKeyDown={handleKeyDown}
+          onMenuClick={() => setIsSidebarOpen(!isSidebarOpen)}
         />
 
         <div className="flex-1 overflow-y-auto p-8" ref={scrollRef}>
