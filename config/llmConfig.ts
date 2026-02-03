@@ -30,6 +30,12 @@ export const LLM_MODELS = {
     provider: 'DeepSeek',
     description: 'Free tier model'
   },
+  'arcee-ai/trinity-large-preview': {
+    id: 'arcee-ai/trinity-large-preview:free',
+    name: 'Trinity Large Preview',
+    provider: 'Arcee AI',
+    description: 'Preview model'
+  },
 } as const;
 
 export type LLMModelKey = keyof typeof LLM_MODELS;
