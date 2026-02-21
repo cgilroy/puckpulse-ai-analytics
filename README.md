@@ -11,7 +11,6 @@ A conversational analytics agent that helps you answer data-driven questions wit
 ## Skills Developed
 * AI Code Assistants — spun up this project using Google AI studio, and then Cursor IDE to refine and adjust
 * Netlify - made deployment a breeeeze
-* 
 * Tailwind CSS - styling and mobile responsiveness
 
 ## Known Issues
